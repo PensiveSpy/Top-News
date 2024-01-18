@@ -1,22 +1,24 @@
-import requests 
-import webbrowser 
+import requests
+import webbrowser
 
-api_key = ""
+api_key = "6e0fc6c18abe4b0f83db47a36faa2d74"
 
-def news():
-    main_url = "https://newsapi.org/v2/top-headlines?country=ca&category=general&apiKey="+api_key
-    news= requests.get(main_url).json()
-    #print(news)
-    article = news["articles"]  
-    # print(article) 
+def get_news():
+    main_url = f"https://newsapi.org/v2/top-headlines?country=ca&category=general&apiKey={api_key}"
+    news = requests.get(main_url).json()
+
+    articles = news.get("articles", [])
+    news_articles = [{'title': article.get('title', ''), 'url': article.get('url', '')} for article in articles]
+
+    for i, article in enumerate(news_articles[:10], 1):
+        print(f"{i}. {article['title']}")
+
+    article_number = int(input("Enter the number of the article you want to read (1-10). Enter 0 if you don't want to read anything. : "))
     
-    
-    news_article= []
-    for arti in article:
-        news_article.append(arti['title'])
-        #print(news_article)
-    for i in range(10):
-        print(news_article[i])
+    if 1 <= article_number <= 10:
+        webbrowser.open(news_articles[article_number - 1]['url'])
+    elif article_number == 0:
+        exit()
         
 
-news()
+get_news()
