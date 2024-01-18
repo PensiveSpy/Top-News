@@ -1,7 +1,7 @@
 import requests
 import webbrowser
 
-api_key = "6e0fc6c18abe4b0f83db47a36faa2d74"
+api_key = ""
 
 def get_news():
     main_url = f"https://newsapi.org/v2/top-headlines?country=ca&category=general&apiKey={api_key}"
